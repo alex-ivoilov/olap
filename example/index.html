@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>ui</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link href="../themes/default/theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="example.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="../lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="../lib/highcharts/exporting.js"></script>
+    <script type="text/javascript" src="../lib/jszip.js"></script>
+    <script type="text/javascript" src="../lib/xlsx.js"></script>
+    <script type="text/javascript" src="../lib/ui.min.js"></script>
+
+    <script type="text/javascript" src="data.js"></script>
+</head>
+<body>
+
+<div class="example-tools">
+    <div class="example-group">
+        <div class="title">Представления</div>
+        <div class="items" id="example-layouts"></div>
+    </div>
+    <div class="example-group">
+        <div class="title">Условноe<br/>форматирование</div>
+        <div class="items" id="example-conditions"></div>
+    </div>
+    <div class="example-group">
+        <div class="title">Экспорт</div>
+        <div class="items" id="example-export"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var fields = [
+        {
+            dataIndex: '0',
+            header: 'Год',
+            sort: 'ASC',
+            type: 'string',
+            area: 'columns'
+        },
+        {
+            dataIndex: '1',
+            header: 'Месяц',
+            sort: 'ASC',
+            type: 'string',
+            area: 'columns'
+        },
+        {
+            dataIndex: '2',
+            header: 'Депозит',
+            type: 'int',
+            area: 'data'
+        },
+        {
+            dataIndex: '3',
+            header: 'Баланс',
+            type: 'int',
+            area: 'data'
+        },
+        {
+            dataIndex: '4',
+            header: 'Сумма',
+            type: 'int',
+            area: 'data'
+        },
+        {
+            dataIndex: '5',
+            header: 'Учреждение 1',
+            type: 'string',
+            area: 'rows'
+        },
+        {
+            dataIndex: '6',
+            header: 'Учреждение 2',
+            type: 'string',
+            area: 'rows'
+        },
+        {
+            dataIndex: '7',
+            header: 'Учреждение 3',
+            type: 'string',
+            area: 'rows'
+        }
+    ];
+
+    var olap = ui.instance({
+        type: 'olap',
+        autoFitColumns: true,
+        plugins: [
+            'olap.chart',
+            'olap.queryBuilder',
+            'olap.styleConditions'
+        ],
+        store: olapFakeData,
+        stateId: 'gen1',
+        layoutName: '321',
+        fields: fields,
+        parent: 'body',
+        left: 10,
+        top: 50,
+        right: 10,
+        bottom: 10,
+        autoRender: false
+    });
+</script>
+<script type="text/javascript" src="utils.js"></script>
+</body>
+</html>

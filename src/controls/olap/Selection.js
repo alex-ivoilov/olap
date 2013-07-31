@@ -123,7 +123,7 @@ ui.define({
                 el.hide();
 
                 if(this.start){
-                    this.updateSelection(this._selection.start, this._selection.end);
+                    this.updateSelection(this._selection.start, this._selection.end, e.ctrlKey ? 'merge' : null);
                     this.clear();
 
                     delete this.start;

@@ -1,0 +1,200 @@
+.ui-qbldr-menu{
+    position: absolute;
+    top: 21px;
+    left: 0;
+    width: 250px;
+    background: #fff;
+    border: 1px solid #d3d3d3;
+    box-shadow: 0 1px 3px #d3d3d3;
+    border-radius: 3px;
+    z-index: 1;
+    display: none;
+    overflow-y: auto;
+    max-height: 300px;
+}
+.ui-qbldr-menu .item {
+    color: #000;
+    font-weight: normal;
+    position: relative;
+    cursor: pointer;
+    padding-left: 30px;
+    height: 24px;
+    line-height: 24px;
+    background: #ffffff;
+    white-space: nowrap;
+    font-size: 12px;
+}
+.ui-qbldr-menu .item span{
+    position: absolute;
+    width: 25px;
+    height: 24px;
+    left: 0;
+    top: 0;
+    text-align: center;
+    font-size: 10px;
+    background-color: #f4f4f4;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-right: 1px solid #e6e6e6;
+}
+.ui-qbldr-menu .item:hover{
+    background-color: #f4f4f4;
+}
+.ui-qbldr-menu .item:hover span{
+    background-color: #e6e6e6;
+    border-color: #d1d1d1;
+}
+
+.ui-qbldr-menu .sep{
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.ui-qbldr {
+    margin: 10px;
+    border: 1px solid #d3d3d3;
+    box-shadow: 0 1px 3px #d3d3d3;
+    border-radius: 3px;
+    position: relative;
+    background: #fff;
+}
+.ui-qbldr .ui-buttons {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+.ui-qbldr .ui-buttons .ui-btn{
+    float: left;
+    margin: 1px 11px 1px 1px;
+}
+.ui-qbldr .ui-buttons .ui-btn:hover{
+    margin: 0 10px 0 0;
+}
+.ui-qbldr-body {
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    font-size: 12px;
+    padding-top: 8px;
+    overflow: auto;
+}
+.ui-qbldr-body .group{
+    position: relative;
+    background: url('img/elbow-line.gif') 10px top repeat-y;
+    float: none;
+}
+.ui-qbldr-body .group  .group{
+    margin-left: 20px;
+}
+.ui-qbldr-body .group .group > .elbow,
+.ui-qbldr-body .condition > .elbow{
+    position: absolute;
+    left: -10px;
+    top: 0;
+    bottom: 0;
+    width:20px;
+    background:url('img/elbow.gif') left top no-repeat;
+}
+.ui-qbldr-body .group.last > .elbow,
+.ui-qbldr-body .condition.last > .elbow{
+    background-color: #fff ;
+    background-image: url('img/elbow-end.gif');
+}
+.ui-qbldr-body .group .condition {
+    margin-left: 20px;
+    position: relative;
+}
+.ui-qbldr-body .operand{
+    color: #b22222;
+    cursor: pointer;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 10px 0 5px;
+    margin: 0 5px;
+    display: block;
+    float: left;
+    cursor: pointer;
+    text-decoration: underline;
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-color: #fff;
+}
+.ui-qbldr-body .cnd{
+    color:#63a81f;
+    cursor: pointer;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px 0 5px;
+    display: block;
+    float: left;
+    cursor: pointer;
+    text-decoration: underline;
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+.ui-qbldr-body .field{
+    color:#36b1ea;
+    cursor: pointer;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px 0 5px;
+    margin-left: 5px;
+    display: block;
+    float: left;
+    cursor: pointer;
+    text-decoration: underline;
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+.ui-qbldr-body .value{
+    color:#36b1ea;
+    cursor: pointer;
+    min-width: 30px;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px 0 5px;
+    display: block;
+    float: left;
+    cursor: pointer;
+    text-decoration: underline;
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+.ui-qbldr-body .value input{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: -20px;
+    outline: none;
+    font-size: 12px;
+    height: 18px;
+    line-height: 18px;
+    padding-left: 3px;
+}
+.ui-qbldr-body .cnd:hover,
+.ui-qbldr-body .operand:hover,
+.ui-qbldr-body .value:hover,
+.ui-qbldr-body .field:hover{
+    background-color: #f4f4f4;
+}
+.ui-qbldr-body .cnd,
+.ui-qbldr-body .operand,
+.ui-qbldr-body .value,
+.ui-qbldr-body .field{
+    background-image: url('img/arrow.png');
+}
+.ui-qbldr-body span{
+    white-space: nowrap;
+    position: relative;
+}
+.ui-qbldr-body .condition .ui-close{
+    float: left;
+    margin-left: 4px;
+    margin-top: 6px;
+}
+.ui-qbldr-body .operand .ui-close{
+    position: absolute;
+    right: -15px;
+    top: 6px;
+}

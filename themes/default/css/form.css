@@ -1,0 +1,107 @@
+.ui-field,
+.ui-combo{
+    position: relative;
+    height: 24px;
+    margin-top: 10px;
+}
+.ui-field.has-label,
+.ui-combo.has-label {
+   margin-top: 25px;
+}
+.ui-field-label,
+.ui-combo-label {
+    position: absolute;
+    left: 0;
+    top: -20px;
+    line-height: 20px;
+    font-size: 11px;
+}
+.ui-field-input,
+.ui-combo-input {
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    border: 1px solid #c5c5c5;
+}
+.ui-field-el,
+.ui-combo-el{
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    border: none;
+    background: none;
+    outline: 0;
+    padding: 0 5px;
+    font-size: 12px;
+}
+.ui-field-triggers,
+.ui-combo-triggers {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.ui-combo-box {
+    background: #fff;
+    border: 1px solid #d3d3d3;
+    box-shadow: 0 1px 3px #d3d3d3;
+    position: absolute;
+    z-index: 999999;
+    margin-top: -1px;
+}
+
+.ui-combo-box .ui-combo-value {
+    line-height: 25px;
+    padding-left: 5px;
+    position: relative;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+
+.ui-combo-box .ui-combo-value.active {
+    background-color:#ebf3fd;
+}
+
+.ui-combo-box .ui-combo-value.active:hover,
+.ui-combo-box .ui-combo-value:hover {
+    background-color:#d9e8fb;
+}
+
+.ui-combo-triggers {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+}
+
+.ui-combo-trigger {
+    background-image: none;
+    background-color: #c5c5c5;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f9f9f9), color-stop(100%, #e3e4e6));
+    background-image: -webkit-linear-gradient(top, #f9f9f9, #e3e4e6);
+    background-image: -moz-linear-gradient(top, #f9f9f9, #e3e4e6);
+    background-image: -o-linear-gradient(top, #f9f9f9, #e3e4e6);
+    background-image: -ms-linear-gradient(top, #f9f9f9, #e3e4e6);
+    background-image: linear-gradient(top, #f9f9f9, #e3e4e6);
+
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    border-left: 1px solid #d3d3d3;
+}
+
+.ui-combo-trigger:hover{
+    background-image: none;
+    background-color: #aaccf6;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ebf3fd), color-stop(39%, #ebf3fd), color-stop(40%, #d9e8fb), color-stop(100%, #d9e8fb));
+    background-image: -webkit-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    background-image: -moz-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    background-image: -o-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    background-image: -ms-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    background-image: linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+}

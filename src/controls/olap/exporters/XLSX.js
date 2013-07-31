@@ -135,7 +135,8 @@ ui.define({
                 bgColor: cell.summary ? 'FAFAFA' : null,
                 width: size.width,
                 borders: this.borders,
-                fontSize: 8
+                fontSize: 8,
+                number: true
             });
         },
 

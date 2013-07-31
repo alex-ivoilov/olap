@@ -71,29 +71,40 @@ ui.define({
 
         /** @private */
         _exportColumn: function(col, size, start){
-            if(this.olap.colsFields.length){
-                this.exportColumn(col, size);
+            var olap = this.olap;
 
-                if(col.expanded && col.groups.length){
-                    start++;
+            if((
+                olap.hideSummary && !col.isSummary())
+                || !olap.hideSummary
+                || col.mainColumnSummary
+                ){
 
-                    ui.each(col.groups, function(c){
-                        this._exportColumn(c, this._columnSize(c), start);
-                    }, this);
+                if(olap.colsFields.length){
+                    this.exportColumn(col, size);
 
-                    if(start > this.expandedCols) this.expandedCols = start;
+                    if(col.expanded && col.groups.length){
+                        start++;
 
-                } else if(col.hasSources() && !col.source){
+                        ui.each(col.groups, function(c){
+                            this._exportColumn(c, this._columnSize(c), start);
+                        }, this);
+
+                        if(start > this.expandedCols) {
+                            this.expandedCols = start;
+                        }
+
+                    } else if(col.hasSources() && !col.source){
+                        ui.each(col.sources, function(c){
+                            c.level = 0;
+                            this._exportColumn(c, this._columnSize(c), 0);
+                        }, this);
+                    }
+                } else {
                     ui.each(col.sources, function(c){
                         c.level = 0;
-                        this._exportColumn(c, this._columnSize(c), 0);
+                        this.exportColumn(c, this._columnSize(c));
                     }, this);
                 }
-            } else {
-                ui.each(col.sources, function(c){
-                    c.level = 0;
-                    this.exportColumn(c, this._columnSize(c));
-                }, this);
             }
         },
 
@@ -101,19 +112,26 @@ ui.define({
         _exportRow: function(row, size, idx){
             var olap = this.olap;
 
-            if((row.summary || row.field.sum) && !row.parentGroup.expanded) return;
+            if((
+                olap.hideSummary && !row.isSummary())
+                || !olap.hideSummary
+                || row.mainRowSummary
+                ){
 
-            this.exportRow(row, size, idx);
+                if((row.summary || row.field.sum) && !row.parentGroup.expanded) return;
 
-            if(row.expanded && row.groups.length){
-                ui.each(row.groups, function(r, index){ this._exportRow(r, this._rowSize(r), index); }, this);
-            } else {
-                for(var i = 0, ln=olap.columnsCount;i<ln;i++){
-                    if(!olap.isIgnoredX(i)){
-                        this.exportCell(
-                            olap.getCellValue(i, row.sumGroup ? row.sumGroup.index : row.index),
-                            { width: olap.getColumn(i).columnWidth || olap.columnWidth },
-                            i == ln-1);
+                this.exportRow(row, size, idx);
+
+                if(row.expanded && row.groups.length){
+                    ui.each(row.groups, function(r, index){ this._exportRow(r, this._rowSize(r), index); }, this);
+                } else {
+                    for(var i = 0, ln=olap.columnsCount;i<ln;i++){
+                        if(!olap.isIgnoredX(i)){
+                            this.exportCell(
+                                olap.getCellValue(i, row.sumGroup ? row.sumGroup.index : row.index),
+                                { width: olap.getColumn(i).columnWidth || olap.columnWidth },
+                                i == ln-1);
+                        }
                     }
                 }
             }
@@ -121,15 +139,24 @@ ui.define({
 
         /** @private */
         _columnSize: function(col){
-            var cols = 1,
+            var olap = this.olap,
+                cols = 1,
                 rows = 1,
                 width;
 
+            if(olap.hideSummary && col.isSummary()){
+                cols = 0;
+            }
+
             if(col.expanded && col.groups.length && !col.field.summary){
                 cols = 0;
-                ui.each(col.groups, function(g){ cols += this._columnSize(g).cols; }, this);
+
+                ui.each(col.groups, function(g){
+                    cols += this._columnSize(g).cols;
+                }, this);
             } else {
                 rows = col.level;
+
                 if(col.hasSources() && !col.source){
                     cols = col.sources.length;
                 }
@@ -146,7 +173,7 @@ ui.define({
             return {
                 rows: rows,
                 width: width,
-                cols: cols || 1
+                cols: cols
             };
         },
 

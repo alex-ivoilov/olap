@@ -35,7 +35,7 @@ ui.define({
          */
         show: function(){
             this.renderValues(this.sort);
-            this.olap.find('.group-resize, .ui-data-resizer').hide();
+            //this.olap.find('.group-resize, .ui-data-resizer').hide();
             this.base();
         },
 
@@ -144,7 +144,7 @@ ui.define({
          * Спрятать меню
          */
         hide:  function(){
-            this.olap.find('.group-resize, .ui-data-resizer').show();
+            //this.olap.find('.group-resize, .ui-data-resizer').show();
             this.base();
         },
 

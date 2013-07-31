@@ -15,26 +15,26 @@
  *          plugins: ['olap.styleConditions']
  *      });
  *
- *      olap.fire('styleConditions.show');
- *      olap.fire('styleConditions.hide');
- *      olap.fire('styleConditions.clear');
+ *      olap.fire('styleConditionsShow');
+ *      olap.fire('styleConditionsHide');
+ *      olap.fire('styleConditionsClear');
  */
 
 /**
  * Показать окно редактора условного форматирования
- * @event styleConditions.show
+ * @event styleConditionsShow
  * @member ui.olap.Olap
  */
 
 /**
  * Скрыть окно редактора условного форматирования
- * @event styleConditions.hide
+ * @event styleConditionsHide
  * @member ui.olap.Olap
  */
 
 /**
  * Очистить условное форматирование
- * @event styleConditions.clear
+ * @event styleConditionsClear
  * @member ui.olap.Olap
  */
 ui.define({
@@ -80,9 +80,9 @@ ui.define({
             this.component.on('layout', this.onLayoutReady, this);
             this.component.on('renderCell', this.onRenderCell, this);
 
-            this.component.on('styleConditions.show', this.show, this);
-            this.component.on('styleConditions.hide', this.hide, this);
-            this.component.on('styleConditions.clear', this.clearData, this);
+            this.component.on('styleConditionsShow', this.show, this);
+            this.component.on('styleConditionsHide', this.hide, this);
+            this.component.on('styleConditionsClear', this.clearData, this);
         },
 
         /**

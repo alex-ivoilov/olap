@@ -289,16 +289,33 @@ ui.define({
          * @param {Boolean} [silent] Не обновлять OLAP куб
          */
         updateIgnored: function(silent){
-            if(!this.sumGroup) return;
+            if(!this.sumGroup && !this.groups.length) return;
 
             var start = this.index,
                 end = this.sumGroup.index,
                 olap = this.olap;
 
-            for(;start<end;start++) this.expanded ? delete olap._ignore['x:'+start] : olap._ignore['x:'+start] = 1;
+            for(;start<end;start++){
+                this.expanded
+                    ? delete olap._ignore['x:'+start]
+                    : olap._ignore['x:'+start] = 1;
+            }
 
-            if(this.expanded) this.groups.each(function(g){ g.updateIgnored(true); });
-            if(silent !== true) olap.dataScroll();
+            if(this.expanded){
+                ui.each(this.groups, function(g){
+                    g.updateIgnored(true);
+                });
+            }
+
+            if(this.olap.hideSummary){
+                this.expanded
+                    ? olap._ignore['x:'+end] = 1
+                    : delete olap._ignore['x:'+end];
+            }
+
+            if(silent !== true) {
+                olap.dataScroll();
+            }
         },
 
         /**

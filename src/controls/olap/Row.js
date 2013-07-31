@@ -10,6 +10,12 @@ ui.define({
     base: 'olapGroup',
     data: {
         /**
+         * @property {Object}
+         * Маска строки данных
+         */
+        query: null,
+
+        /**
          * Конструктор
          * @constructor
          * @param {Object} config Параметры инициализации
@@ -108,9 +114,13 @@ ui.define({
             this.css({ float: expand ? 'none' : 'left' });
 
             if(sum){
-                sum.el.insertAfter(this.el);
-                sum.doRender();
-                sum.view.getBox('title').setWidth(sumWidth);
+                if(olap.hideSummary === true){
+                    sum.hide();
+                } else {
+                    sum.el.insertAfter(this.el);
+                    sum.doRender();
+                    sum.view.getBox('title').setWidth(sumWidth);
+                }
             }
 
             if((expand || silent !== true) && parent && expandParent !== false)
@@ -132,18 +142,30 @@ ui.define({
             if(!this.sumGroup && !this.groups.length) return;
 
             var start = this.index,
-                end = this.sumGroup ? this.sumGroup.index : this.groups[this.groups.length - 1].index,
+                end = this.sumGroup.index,
                 olap = this.olap;
 
-            for(;start<end;start++)
-                this.expanded ? delete olap._ignore['y:'+start]
-                              : olap._ignore['y:'+start] = 1;
+            for(;start<end;start++){
+                this.expanded
+                    ? delete olap._ignore['y:'+start]
+                    : olap._ignore['y:'+start] = 1;
+            }
 
-            if(this.expanded)
-                ui.each(this.groups, function(g){ g.updateIgnored(true); });
+            if(this.expanded){
+                ui.each(this.groups, function(g){
+                    g.updateIgnored(true);
+                });
+            }
 
-            if(silent !== true)
+            if(this.olap.hideSummary){
+                this.expanded
+                    ? olap._ignore['y:'+end] = 1
+                    : delete olap._ignore['y:'+end];
+            }
+
+            if(silent !== true) {
                 olap.dataScroll();
+            }
         },
 
         /**

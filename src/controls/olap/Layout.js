@@ -188,7 +188,9 @@ ui.define({
 
             delete layouts[name];
 
-            localStorage.setItem(key, JSON.stringify(layouts));
+            if(localStorage){
+                localStorage.setItem(key, JSON.stringify(layouts));
+            }
         },
 
         getKey: function(){
@@ -202,13 +204,19 @@ ui.define({
 
             layouts[name] = value;
 
-            localStorage.setItem(key, JSON.stringify(layouts));
+            if(localStorage){
+                localStorage.setItem(key, JSON.stringify(layouts));
+            }
         },
 
         getLayouts: function(){
-            var val = localStorage.getItem('olap.' + this.olap.stateId + '.layouts');
+            if(localStorage){
+                var val = localStorage.getItem('olap.' + this.olap.stateId + '.layouts');
 
-            return val ? JSON.parse(val) : {};
+                return val ? JSON.parse(val) : {};
+            }
+
+            return {};
         },
 
         /** @private */

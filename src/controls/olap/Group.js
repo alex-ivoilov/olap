@@ -10,6 +10,12 @@ ui.define({
     type: 'olapGroup',
     base: 'control',
     data: {
+        /**
+         * @property {ui.olap.Olap}
+         * OLAP куб
+         */
+        olap: null,
+
         viewType: 'olapGroupView',
         cls: 'group',
 
@@ -102,13 +108,26 @@ ui.define({
         getName: function(){
             var title = this.title;
 
-            if(this.summary || (this.field && this.field.summary)){
+            if(this.isSummary()){
                 title = this.parentGroup ? this.parentGroup.title : null;
             }
 
             title = title || 'Пусто';
 
             return title.replace(/<\/?[^>]+(>|$)/g, "");
+        },
+
+        /**
+         * Получить последнюю группу
+         */
+        lastGroup: function(){
+            var group = this.sumGroup ? this.sumGroup : this.groups[this.groups.length - 1];
+
+            if(this.expanded && this.olap.hideSummary){
+                group = this.groups[this.groups.length - 2];
+            }
+
+            return group || this.groups[this.groups.length - 1];
         },
 
         /**
@@ -124,6 +143,14 @@ ui.define({
          */
         toggle: function(){
             this.expand(!this.expanded);
+        },
+
+        /**
+         * Проверить является ли группа итогом
+         * @returns {Boolean} Итоговая группа
+         */
+        isSummary: function(){
+            return this.summary || (this.field && this.field.summary);
         },
 
         /**
@@ -151,29 +178,38 @@ ui.define({
         expandGroup: function(expand){
             this.doRender();
 
-            if(this.updateSources) this.updateSources(expand);
+            if(this.updateSources) {
+                this.updateSources(expand);
+            }
 
             if(this.olap.store.onGroupExpand(this, expand) === false){
                 return false;
             }
 
-           if(expand && !this.isExpandable()) return false;
+           if(expand && !this.isExpandable())
+               return false;
 
             var sum = this.sumGroup;
 
             expand ? this.addClass('expanded')
                    : this.removeClass('expanded');
 
-            if(sum) expand ? sum.el.show() : sum.el.hide();
-
             this.expanded = expand;
 
             this.groups.each(function(g){
-                if(expand){
-                    if(!g.rendered) g.expand(false, true);
+                if(expand && (!g.olap.hideSummary || (g.olap.hideSummary && g.isSummary() !== true))){
+                    if(!g.rendered) {
+                        g.expand(false, true);
+                    }
                     g.show();
-                } else if(g.rendered) g.hide();
+                } else if(g.rendered) {
+                    g.hide();
+                }
             });
+
+            if(sum && this.olap.hideSummary !== true) expand
+                ? sum.el.show()
+                : sum.el.hide();
 
             return true;
         },
@@ -185,21 +221,43 @@ ui.define({
         getRowsCount: function(){
             var group = this,
                 sum = group.sumGroup,
-                getRows = function(gr, i){
-                    ui.each(gr.groups, function(g){
-                        if(g.expanded == true){
-                            g.groups.length ? i = getRows(g, i) : i++;
-                        } else if(!g.sumGroup || (gr.sumGroup && gr.sumGroup.field.sum)){
-                            i++;
-                        }
+                getRows = this.olap.hideSummary ?
+                    function(gr, i){
+                        ui.each(gr.groups, function(g){
+                            if(!g.isSummary()){
+                                if(g.expanded == true){
+                                    if(g.groups.length){
+                                        i = getRows(g, i);
+                                    } else {
+                                        i++;
+                                    }
+                                } else {
+                                    i++;
+                                }
+                            }
+                        });
 
-                        if(g.field.sum && g === sum){
-                            i--;
-                        }
-                    });
+                        return i;
+                    } :
+                    function(gr, i){
+                        ui.each(gr.groups, function(g){
+                            if(g.expanded == true){
+                                if(g.groups.length){
+                                    i = getRows(g, i);
+                                } else {
+                                    i++;
+                                }
+                            } else if(!g.sumGroup || (gr.sumGroup && gr.sumGroup.field.sum)){
+                                i++;
+                            }
 
-                    return i;
-                };
+                            if(g.field.sum && g === sum){
+                                i--;
+                            }
+                        });
+
+                        return i;
+                    };
 
             return group.expanded ? (getRows(group, 0) || 1) : 1;
         },
@@ -208,7 +266,9 @@ ui.define({
          * Показать группу
          */
         show: function(){
-            if(this.sumGroup) this.sumGroup.show();
+            if(this.sumGroup && this.olap.hideSummary !== true) {
+                this.sumGroup.show();
+            }
 
             if(this.parentGroup){
                 if(this.parentGroup.expanded) this.base();
@@ -221,7 +281,9 @@ ui.define({
          * Скрыть группу
          */
         hide: function(){
-            if(this.sumGroup) this.sumGroup.hide();
+            if(this.sumGroup) {
+                this.sumGroup.hide();
+            }
 
             this.base();
         },

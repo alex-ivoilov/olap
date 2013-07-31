@@ -1,0 +1,58 @@
+.example-tools{
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    right: 10px;
+    height: 39px;
+    border: 1px solid #c5c5c5;
+
+    background-color: #c5c5c5;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f9f9f9), color-stop(100%, #e3e4e6));
+    background-image: -webkit-linear-gradient(top, #f9f9f9, #e3e4e6);
+    background-image: -moz-linear-gradient(top, #f9f9f9, #e3e4e6);
+    background-image: -o-linear-gradient(top, #f9f9f9, #e3e4e6);
+    background-image: -ms-linear-gradient(top, #f9f9f9, #e3e4e6);
+    background-image: linear-gradient(top, #f9f9f9, #e3e4e6);
+}
+
+.example-group {
+    margin-top: 4px;
+    margin-left: 10px;
+    float: left;
+    position: relative;
+    height: 27px;
+}
+
+.example-group .title{
+    font-size: 10px;
+    float: left;
+    padding-right: 8px;
+    font-weight: bold;
+    color: #545454;
+    padding-top: 5px;
+    text-align: right;
+}
+
+.example-group .items{
+    float: left;
+    background: #e3e4e6;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+.example-btn{
+    float: left;
+    margin: 1px 6px 1px 1px;
+}
+.example-btn:hover{
+    margin: 0 5px 0 0;
+}
+
+.ui-btn-menu .ui-close {
+    position: absolute;
+    right: 5px;
+    top: 7px;
+}

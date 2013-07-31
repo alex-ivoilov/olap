@@ -1,0 +1,140 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Tahoma, tahoma;
+}
+
+.ui-clear{
+    clear: both;
+    float: none !important;
+    font-size: 0;
+    line-height: 0;
+    height: 0;
+}
+
+.ui-fit{
+    position:absolute;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
+    width: auto;
+    height: auto;
+}
+
+.ui-link{
+    text-decoration: underline;
+    color: blue;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.ui-modal{
+    position:absolute;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
+    width: auto;
+    height: auto;
+    background: rgba(0, 0, 0, .25);
+    z-index: 1000;
+}
+
+.ui-unselectable,
+.ui-unselectable * {
+    user-select:none;
+    -o-user-select:none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+}
+
+.ui-close{
+    width:11px;
+    height:11px;
+    background: url('img/close.png') left top no-repeat;
+    cursor: pointer;
+}
+.ui-close:hover{
+    background-position: left -11px;
+}
+
+.ui-btn{
+    position: relative;
+    height: 20px;
+    line-height: 20px;
+    font-size: 10px;
+    color:#444;
+    float: left;
+    cursor: pointer;
+}
+.ui-btn:hover{
+    background-image: none;
+    background-color: #aaccf6;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ebf3fd), color-stop(39%, #ebf3fd), color-stop(40%, #d9e8fb), color-stop(100%, #d9e8fb));
+    background-image: -webkit-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    background-image: -moz-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    background-image: -o-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    background-image: -ms-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    background-image: linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    border: 1px solid #c5c5c5;
+    border-radius: 3px;
+    color:#000;
+}
+
+
+
+.ui-btn span.icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: none !important;
+    padding: 0;
+}
+
+
+.ui-btn span.text {
+    height: 20px;
+    display: block;
+    position: relative;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: none !important;
+    padding: 0 5px;
+}
+
+.ui-btn.menu span.text {
+    padding-right: 12px;
+    background: url('img/arrow.png') right center no-repeat;
+}
+.ui-btn-menu {
+    position: absolute;
+    left:0;
+    top: 22px;
+    width: 200px;
+    background: #fafafa;
+    border: 1px solid #c5c5c5;
+    box-shadow: 0 1px 3px #d3d3d3;
+    border-radius: 3px;
+    z-index: 1000;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.ui-btn-menu .item{
+    line-height: 25px;
+    padding-left: 5px;
+    position: relative;
+    font-size: 11px;
+    cursor: pointer;
+}
+.ui-btn-menu .item:hover{
+    background-color:#d9e8fb;
+}

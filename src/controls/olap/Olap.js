@@ -112,37 +112,43 @@ ui.define({
         sumColumn: { group: '<b>Итого</b>', summary: true, items: [] },
 
         /**
-         * @cfg {Number} columnHeight
+         * @cfg {Number}
          * Высота групп по умолчанию
          */
         columnHeight: 22,
 
         /**
-         * @cfg {Number} columnWidth
+         * @cfg {Number}
          * Ширина групп по умолчанию
          */
         columnWidth: 100,
 
         /**
-         * @cfg {Boolean} columnSummary
+         * @property {Boolean}
          * Отображать итоговый столбец
          */
         columnSummary: true,
 
         /**
-         * @cfg {Boolean} emptySumRows
-         * Скрывать итоги у строк с одной дочерней строкой
+         * @property {Boolean}
+         * Отображать итоговую строку
          */
-        emptySumRows: true,
+        rowSummary: true,
 
         /**
-         * @cfg {String} layoutName
+         * @property {Boolean}
+         * Скрывать итоги
+         */
+        hideSummary: false,
+
+        /**
+         * @cfg {String}
          * Наименование представления
          */
         layoutName: null,
 
         /**
-         * @cfg {String} stateId
+         * @cfg {String}
          * Идентификатор хранилища представлений
          */
         stateId: 'olap',
@@ -246,7 +252,10 @@ ui.define({
 
             var me = this;
 
-            $(window).resize(function(){ me.view.updateSize(); });
+            $(window).resize(function(){
+                me.view.updateSize();
+                me.dataScroll();
+            });
 
             this.initDragDrop();
 
@@ -641,7 +650,7 @@ ui.define({
             }
 
             cell.html(renderer ? renderer(val.value, type, field, this, x, y) : val.value);
-            cell.width(((col && col.columnWidth) || this.columnWidth) - 6 );
+            cell.width(((col && col.columnWidth) || this.columnWidth) - 5 );
 
             this.fire('renderCell', [cell, val, this, x, y]);
 
@@ -712,7 +721,7 @@ ui.define({
                     type.format(val, di, col.field, me, x, y);
                 }
 
-                if(row.summary){
+                if(row.summary || row.mainRowSummary){
                     val.summary = true;
                 }
             }
@@ -760,10 +769,12 @@ ui.define({
                     me.renderRow(item, fragment, level);
                 }, me);
 
-                var sumData = ui.clone(me.sumColumn);
-                sumData.mainRowSummary = true;
+                if(me.rowSummary){
+                    var sumData = ui.clone(me.sumColumn);
+                    sumData.mainRowSummary = true;
 
-                me.renderRow(sumData, fragment, groups.length);
+                    me.renderRow(sumData, fragment, groups.length);
+                }
 
                 ui.instance({ type: 'clear', parent: fragment });
                 fragment.appendTo(layout.el);
@@ -780,7 +791,7 @@ ui.define({
          */
         renderRow: function(data, g, level){
             if(!data.group && !data.items){
-                return;
+                return null;
             }
 
             var group = this.renderGroup(g, data, 'olapRow');
@@ -809,7 +820,7 @@ ui.define({
 
             var field = this.fields.findOne({ area: 'rows', dataIndex: data.code });
 
-            if(field && field.summary !== false && level > 1 && (this.emptySumRows || (data.items.length > 1 && data.items[0].group))){
+            if(field && field.summary !== false && level > 1){
                 var conf = ui.clone(this.sumColumn);
                 conf.group = field.summaryHeaderRenderer ?
                     field.summaryHeaderRenderer(data.group) :
@@ -821,6 +832,7 @@ ui.define({
                 sumGroup.query = ui.clone(group.query);
                 sumGroup.summary = true;
                 sumGroup.data = field;
+                sumGroup.autoRender = false;
                 sumGroup.index = this.rowsCount;
                 sumGroup.addClass('ui-row-sum-cell');
 
